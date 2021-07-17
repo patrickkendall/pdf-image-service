@@ -3,7 +3,27 @@ from docx.shared import Inches
 from PIL import Image
 import requests
 from docx.shared import Pt
-from flask import Flask, url_for
+from flask import Flask, url_for, request
+from flask_restful import Resource, Api
+from flask_cors import CORS
+
+#rest api
+
+images = [{
+    'pictures': ['property0.jpeg', 'property1.jpg', 'property2.jpg','property3.jpg', 'property4.jpg', 'property5.jpg','property2.jpg', 'property4.jpg', 'property4.jpg', 'property4.jpg', 'property4.jpg', 'property4.jpg', 'property4.jpg', 'property4.jpg','property0.jpeg', 'property1.jpg', 'property2.jpg','property3.jpg', 'property4.jpg', 'property5.jpg','property2.jpg', 'property4.jpg', 'property4.jpg', 'property4.jpg', 'property4.jpg', 'property4.jpg', 'property4.jpg', 'property4.jpg']
+}]
+
+app = Flask(__name__)
+CORS(app)
+
+app.run(port=8000)
+
+@app.route('/generateImage', methods=['POST'])
+def generate_image():
+    req_data = request.get_json
+    print(req_data)
+
+#generates Word document with images in a table view
 
 document = Document()
 
@@ -37,8 +57,5 @@ for index in range(len(pictures)):
             tables = document.tables
             table = document.add_table(rows=1, cols=3)
             row_cells = table.add_row().cells
-
-
-        
 
 document.save('demo.docx')
